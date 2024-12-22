@@ -1,13 +1,16 @@
 package com.example.SpringSecondAppTest.authentication;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
-@Data
-@AllArgsConstructor
-public class RegisterRequest {
-    private String firstName;
-    private String lastName;
-    private String login;
-    private String password;
+public record RegisterRequest(
+        String firstName,
+        String lastName,
+        @NotBlank(message = "Login cannot be empty")
+        String login,
+        @Size(min = 4, message = "Password must be at least 4 characters")
+        String password,
+        FamilyCreationType familyCreationType,
+        String familyName,
+        Long id) {
 }

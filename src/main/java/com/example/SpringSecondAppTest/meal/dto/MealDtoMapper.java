@@ -1,7 +1,7 @@
 package com.example.SpringSecondAppTest.meal.dto;
 
 
-import com.example.SpringSecondAppTest.ingredient_meal.dto.IngredientsMealsDtoMapper;
+import com.example.SpringSecondAppTest.meal_composition.dto.MealCompositionDtoMapper;
 import com.example.SpringSecondAppTest.meal.Meal;
 
 import java.util.List;
@@ -19,7 +19,8 @@ public class MealDtoMapper {
     private static BasicMealDto mapToBasicMealDto(Meal meal) {
         return new BasicMealDto(
                 meal.getId(),
-                meal.getName());
+                meal.getName(),
+                meal.getImageUrl());
     }
 
     public static List<DetailedMealDto> mapToDetailedMealDtos(List<Meal> meals){
@@ -33,7 +34,8 @@ public class MealDtoMapper {
                 meal.getId(),
                 meal.getName(),
                 meal.getDescription(),
+                meal.getImageUrl(),
                 meal.getCuisine().getCuisineType(),
-                IngredientsMealsDtoMapper.mapToIngredientMealDtos(meal.getIngredientMeals()));
+                MealCompositionDtoMapper.mapToMealCompositionDtos(meal.getMealCompositions()));
     }
 }

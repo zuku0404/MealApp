@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/cuisines")
+@RequestMapping("/api/cuisines")
 @RequiredArgsConstructor
 public class CuisineController {
 
@@ -22,7 +22,8 @@ public class CuisineController {
 
     @GetMapping("/{id}/meals")
     public List<BasicMealDto> getMealsByCuisine(
-            @PathVariable("id") Long id, @RequestParam(required = false, defaultValue = "0") int page) {
+            @PathVariable("id") Long id,
+            @RequestParam(required = false, defaultValue = "0") int page) {
         return cuisineService.findMealsByCuisine(id, page);
     }
 }

@@ -1,5 +1,6 @@
 package com.example.SpringSecondAppTest.authentication;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -9,12 +10,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/auth")
+@RequestMapping("/api/auth")
 public class AuthenticationController {
     private final AuthenticationService authenticationService;
 
     @PostMapping("/register")
-    public ResponseEntity<Object> register(@RequestBody RegisterRequest request){
+    public ResponseEntity<Object> register(@Valid @RequestBody RegisterRequest request){
         return authenticationService.register(request);
     }
 

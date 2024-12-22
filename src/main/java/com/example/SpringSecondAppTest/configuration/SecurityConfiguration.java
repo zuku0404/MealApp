@@ -23,12 +23,13 @@ public class SecurityConfiguration {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(request ->
-                        request.requestMatchers("/auth/**",
-                                        "/meals/**",
-                                        "/ingredientsMeals/**",
-                                        "/ingredients/**",
-                                        "/users/ingredients/**",
-                                        "/cuisines/**")
+                        request.requestMatchers("api/auth/**",
+                                        "/api/meals/**",
+                                        "/api/family/meals/**",
+                                        "/api/ingredientsMeals/**",
+                                        "/api/ingredients/**",
+                                        "/api/family/ingredients/**",
+                                        "/api/cuisines/**")
                                 .permitAll()
                                 .anyRequest()
                                 .authenticated())

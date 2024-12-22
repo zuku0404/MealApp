@@ -1,8 +1,8 @@
 package com.example.SpringSecondAppTest.cuisine;
 
 import com.example.SpringSecondAppTest.meal.Meal;
-import com.example.SpringSecondAppTest.preferences.UserPreference;
-import com.example.SpringSecondAppTest.user_meal.UserMeal;
+import com.example.SpringSecondAppTest.preferences.FamilyPreference;
+import com.example.SpringSecondAppTest.family_meal.FamilyMeal;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -31,8 +31,13 @@ public class Cuisine {
     private Set<Meal> meals = new HashSet<>();
 
     @OneToMany(mappedBy = "cuisine")
-    private Set<UserMeal> userMeals = new HashSet<>();
+    private Set<FamilyMeal> familyMeals = new HashSet<>();
 
     @ManyToMany(mappedBy = "cuisines")
-    private Set<UserPreference> userPreferences = new HashSet<>();
+    private Set<FamilyPreference> familyPreferences = new HashSet<>();
+
+    public Cuisine(Long id, CuisineType cuisineType){
+        this.id = id;
+        this.cuisineType = cuisineType;
+    }
 }

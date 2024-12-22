@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/ingredients")
+@RequestMapping("/api/ingredients")
 @RequiredArgsConstructor
 public class IngredientController {
 
@@ -34,7 +34,8 @@ public class IngredientController {
 
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public IngredientDto updateIngredient(@PathVariable("id") Long id, @RequestBody IngredientWithoutIdDto ingredientDto) {
+    public IngredientDto updateIngredient(@PathVariable("id") Long id,
+                                          @RequestBody IngredientWithoutIdDto ingredientDto) {
         return ingredientService.update(id, ingredientDto);
     }
 

@@ -1,99 +1,107 @@
 --liquibase formatted sql
 --changeset zuku:1
 
-INSERT INTO cuisine (name) VALUES ('ITALIAN');
-INSERT INTO cuisine (name) VALUES ('POLISH');
+INSERT INTO cuisine (name) VALUES
+('ITALIAN'),
+('POLISH');
 
-INSERT INTO meal (cuisine_id, name, description) VALUES (1, 'Margherita Pizza', 'Classic Italian pizza with tomato and cheese');
-INSERT INTO meal (cuisine_id, name, description) VALUES (1, 'Spaghetti Carbonara', 'Pasta with eggs, cheese, and pancetta');
-INSERT INTO meal (cuisine_id, name, description) VALUES (2, 'Pierogi', 'Polish dumplings with various fillings');
-INSERT INTO meal (cuisine_id, name, description) VALUES (2, 'Bigos', 'Traditional Polish hunter’s stew');
-INSERT INTO meal (cuisine_id, name, description) VALUES (1, 'Lasagna', 'Layers of pasta, cheese, and meat sauce');
+INSERT INTO meal (cuisine_id, name, description, image_url) VALUES
+(1, 'Margherita Pizza', 'Classic Italian pizza with tomato and cheese', 'http://localhost:8080/images/margarita.jpg'),
+(1, 'Spaghetti Carbonara', 'Pasta with eggs, cheese, and pancetta', 'http://localhost:8080/images/spaghetti.jpg'),
+(2, 'Pierogi', 'Polish dumplings with various fillings','http://localhost:8080/images/pierogi.jpg'),
+(2, 'Bigos', 'Traditional Polish hunter’s stew','http://localhost:8080/images/bigos.jpg'),
+(1, 'Lasagna', 'Layers of pasta, cheese, and meat sauce','http://localhost:8080/images/lasagna.jpg');
 
-INSERT INTO ingredient (name, ingredient_category) VALUES ('Tomato', 'VEGETARIAN');
-INSERT INTO ingredient (name, ingredient_category) VALUES ('Mozzarella', 'VEGETARIAN');
-INSERT INTO ingredient (name, ingredient_category) VALUES ('Flour', 'VEGAN');
-INSERT INTO ingredient (name, ingredient_category) VALUES ('Yeast', 'VEGAN');
-INSERT INTO ingredient (name, ingredient_category) VALUES ('Olive oil', 'VEGAN');
-INSERT INTO ingredient (name, ingredient_category) VALUES ('Salt', 'VEGAN');
-INSERT INTO ingredient (name, ingredient_category) VALUES ('Water', 'VEGAN');
-INSERT INTO ingredient (name, ingredient_category) VALUES ('Spaghetti', 'VEGAN');
-INSERT INTO ingredient (name, ingredient_category) VALUES ('Bacon (pancetta)', 'MEAT');
-INSERT INTO ingredient (name, ingredient_category) VALUES ('Pecorino/Parmesan cheese', 'VEGETARIAN');
-INSERT INTO ingredient (name, ingredient_category) VALUES ('Eggs', 'VEGETARIAN');
-INSERT INTO ingredient (name, ingredient_category) VALUES ('Garlic', 'VEGAN');
-INSERT INTO ingredient (name, ingredient_category) VALUES ('Black pepper', 'VEGAN');
-INSERT INTO ingredient (name, ingredient_category) VALUES ('Potatoes', 'VEGAN');
-INSERT INTO ingredient (name, ingredient_category) VALUES ('Cottage cheese', 'VEGETARIAN');
-INSERT INTO ingredient (name, ingredient_category) VALUES ('Onion', 'VEGAN');
-INSERT INTO ingredient (name, ingredient_category) VALUES ('Butter', 'VEGETARIAN');
-INSERT INTO ingredient (name, ingredient_category) VALUES ('Sauerkraut', 'VEGAN');
-INSERT INTO ingredient (name, ingredient_category) VALUES ('White cabbage', 'VEGAN');
-INSERT INTO ingredient (name, ingredient_category) VALUES ('Sausage', 'MEAT');
-INSERT INTO ingredient (name, ingredient_category) VALUES ('Bacon', 'MEAT');
-INSERT INTO ingredient (name, ingredient_category) VALUES ('Dried mushrooms', 'VEGAN');
-INSERT INTO ingredient (name, ingredient_category) VALUES ('Dried plums', 'VEGAN');
-INSERT INTO ingredient (name, ingredient_category) VALUES ('Bay leaves', 'VEGAN');
-INSERT INTO ingredient (name, ingredient_category) VALUES ('Allspice', 'VEGAN');
-INSERT INTO ingredient (name, ingredient_category) VALUES ('Red wine', 'VEGAN');
-INSERT INTO ingredient (name, ingredient_category) VALUES ('Lasagna sheets', 'VEGAN');
-INSERT INTO ingredient (name, ingredient_category) VALUES ('Ground meat (beef/pork)', 'MEAT');
-INSERT INTO ingredient (name, ingredient_category) VALUES ('Canned tomatoes', 'VEGAN');
-INSERT INTO ingredient (name, ingredient_category) VALUES ('Milk', 'VEGETARIAN');
-INSERT INTO ingredient (name, ingredient_category) VALUES ('Butter (for Béchamel)', 'VEGETARIAN');
-INSERT INTO ingredient (name, ingredient_category) VALUES ('Flour (for Béchamel)', 'VEGAN');
+INSERT INTO ingredient (name, ingredient_category) VALUES
+('Tomato', 'VEGETARIAN'),
+('Mozzarella', 'VEGETARIAN'),
+('Flour', 'VEGAN'),
+('Yeast', 'VEGAN'),
+('Olive oil', 'VEGAN'),
+('Salt', 'VEGAN'),
+('Water', 'VEGAN'),
+('Spaghetti', 'VEGAN'),
+('Bacon (pancetta)', 'MEAT'),
+('Pecorino/Parmesan cheese', 'VEGETARIAN'),
+('Eggs', 'VEGETARIAN'),
+('Garlic', 'VEGAN'),
+('Black pepper', 'VEGAN'),
+('Potatoes', 'VEGAN'),
+('Cottage cheese', 'VEGETARIAN'),
+('Onion', 'VEGAN'),
+('Butter', 'VEGETARIAN'),
+('Sauerkraut', 'VEGAN'),
+('White cabbage', 'VEGAN'),
+('Sausage', 'MEAT'),
+('Bacon', 'MEAT'),
+('Dried mushrooms', 'VEGAN'),
+('Dried plums', 'VEGAN'),
+('Bay leaves', 'VEGAN'),
+('Allspice', 'VEGAN'),
+('Red wine', 'VEGAN'),
+('Lasagna sheets', 'VEGAN'),
+('Ground meat (beef/pork)', 'MEAT'),
+('Canned tomatoes', 'VEGAN'),
+('Milk', 'VEGETARIAN'),
+('Butter (for Béchamel)', 'VEGETARIAN'),
+('Flour (for Béchamel)', 'VEGAN');
 
-INSERT INTO meal_ingredient (ingredient_id, meal_id, `count`, unit) VALUES (1, 1, 3.0, 'PIECE');  -- Tomato
-INSERT INTO meal_ingredient (ingredient_id, meal_id, `count`, unit) VALUES (3, 1, 250.0, 'GRAM'); -- Mozzarella
-INSERT INTO meal_ingredient (ingredient_id, meal_id, `count`, unit) VALUES (4, 1, 500.0, 'GRAM'); -- Flour
-INSERT INTO meal_ingredient (ingredient_id, meal_id, `count`, unit) VALUES (5, 1, 1.0, 'PIECE');  -- Yeast (1 packet)
-INSERT INTO meal_ingredient (ingredient_id, meal_id, `count`, unit) VALUES (6, 1, 1.0, 'TABLESPOON'); -- Olive oil
-INSERT INTO meal_ingredient (ingredient_id, meal_id, `count`, unit) VALUES (7, 1, 1.0, 'TEASPOON'); -- Salt
-INSERT INTO meal_ingredient (ingredient_id, meal_id, `count`, unit) VALUES (8, 1, 200.0, 'MILLILITER'); -- Water
+INSERT INTO meal_composition (ingredient_id, meal_id, `count`, unit) VALUES
+(1, 1, 3.0, 'PIECE'),  -- Tomato
+(3, 1, 250.0, 'GRAM'), -- Mozzarella
+(4, 1, 500.0, 'GRAM'), -- Flour
+(5, 1, 1.0, 'PIECE'),  -- Yeast (1 packet)
+(6, 1, 1.0, 'TABLESPOON'), -- Olive oil
+(7, 1, 1.0, 'TEASPOON'), -- Salt
+(8, 1, 200.0, 'MILLILITER'); -- Water
 
-INSERT INTO meal_ingredient (ingredient_id, meal_id, `count`, unit) VALUES (9, 2, 400.0, 'GRAM');  -- Spaghetti
-INSERT INTO meal_ingredient (ingredient_id, meal_id, `count`, unit) VALUES (10, 2, 150.0, 'GRAM'); -- Bacon (pancetta)
-INSERT INTO meal_ingredient (ingredient_id, meal_id, `count`, unit) VALUES (11, 2, 100.0, 'GRAM'); -- Pecorino/Parmesan cheese
-INSERT INTO meal_ingredient (ingredient_id, meal_id, `count`, unit) VALUES (5, 2, 4.0, 'PIECE');   -- Eggs
-INSERT INTO meal_ingredient (ingredient_id, meal_id, `count`, unit) VALUES (12, 2, 2.0, 'CLOVE');  -- Garlic
-INSERT INTO meal_ingredient (ingredient_id, meal_id, `count`, unit) VALUES (13, 2, 1.0, 'TEASPOON'); -- Black pepper
-INSERT INTO meal_ingredient (ingredient_id, meal_id, `count`, unit) VALUES (6, 2, 2.0, 'TABLESPOON'); -- Olive oil
+INSERT INTO meal_composition (ingredient_id, meal_id, `count`, unit) VALUES
+(9, 2, 400.0, 'GRAM'),  -- Spaghetti
+(10, 2, 150.0, 'GRAM'), -- Bacon (pancetta)
+(11, 2, 100.0, 'GRAM'), -- Pecorino/Parmesan cheese
+(5, 2, 4.0, 'PIECE'),   -- Eggs
+(12, 2, 2.0, 'CLOVE'),  -- Garlic
+(13, 2, 1.0, 'TEASPOON'), -- Black pepper
+(6, 2, 2.0, 'TABLESPOON'); -- Olive oil
 
-INSERT INTO meal_ingredient (ingredient_id, meal_id, `count`, unit) VALUES (4, 3, 500.0, 'GRAM'); -- Flour
-INSERT INTO meal_ingredient (ingredient_id, meal_id, `count`, unit) VALUES (8, 3, 250.0, 'MILLILITER'); -- Water
-INSERT INTO meal_ingredient (ingredient_id, meal_id, `count`, unit) VALUES (5, 3, 1.0, 'PIECE');  -- Egg
-INSERT INTO meal_ingredient (ingredient_id, meal_id, `count`, unit) VALUES (7, 3, 1.0, 'TEASPOON'); -- Salt
-INSERT INTO meal_ingredient (ingredient_id, meal_id, `count`, unit) VALUES (14, 3, 500.0, 'GRAM'); -- Potatoes
-INSERT INTO meal_ingredient (ingredient_id, meal_id, `count`, unit) VALUES (15, 3, 300.0, 'GRAM'); -- Cottage cheese
-INSERT INTO meal_ingredient (ingredient_id, meal_id, `count`, unit) VALUES (16, 3, 1.0, 'PIECE');  -- Onion
-INSERT INTO meal_ingredient (ingredient_id, meal_id, `count`, unit) VALUES (17, 3, 2.0, 'TABLESPOON'); -- Butter
+INSERT INTO meal_composition (ingredient_id, meal_id, `count`, unit) VALUES
+(4, 3, 500.0, 'GRAM'), -- Flour
+(8, 3, 250.0, 'MILLILITER'), -- Water
+(5, 3, 1.0, 'PIECE'),  -- Egg
+(7, 3, 1.0, 'TEASPOON'), -- Salt
+(14, 3, 500.0, 'GRAM'), -- Potatoes
+(15, 3, 300.0, 'GRAM'), -- Cottage cheese
+(16, 3, 1.0, 'PIECE'),  -- Onion
+(17, 3, 2.0, 'TABLESPOON'); -- Butter
 
-INSERT INTO meal_ingredient (ingredient_id, meal_id, `count`, unit) VALUES (18, 4, 1.0, 'KILOGRAM'); -- Sauerkraut
-INSERT INTO meal_ingredient (ingredient_id, meal_id, `count`, unit) VALUES (19, 4, 500.0, 'GRAM'); -- White cabbage
-INSERT INTO meal_ingredient (ingredient_id, meal_id, `count`, unit) VALUES (10, 4, 300.0, 'GRAM'); -- Sausage
-INSERT INTO meal_ingredient (ingredient_id, meal_id, `count`, unit) VALUES (20, 4, 200.0, 'GRAM'); -- Bacon
-INSERT INTO meal_ingredient (ingredient_id, meal_id, `count`, unit) VALUES (21, 4, 50.0, 'GRAM'); -- Dried mushrooms
-INSERT INTO meal_ingredient (ingredient_id, meal_id, `count`, unit) VALUES (22, 4, 100.0, 'GRAM'); -- Dried plums
-INSERT INTO meal_ingredient (ingredient_id, meal_id, `count`, unit) VALUES (16, 4, 2.0, 'PIECE'); -- Onion
-INSERT INTO meal_ingredient (ingredient_id, meal_id, `count`, unit) VALUES (23, 4, 2.0, 'PIECE'); -- Bay leaves
-INSERT INTO meal_ingredient (ingredient_id, meal_id, `count`, unit) VALUES (24, 4, 5.0, 'PIECE'); -- Allspice
-INSERT INTO meal_ingredient (ingredient_id, meal_id, `count`, unit) VALUES (13, 4, 1.0, 'TEASPOON'); -- Pepper
-INSERT INTO meal_ingredient (ingredient_id, meal_id, `count`, unit) VALUES (7, 4, 1.0, 'TEASPOON'); -- Salt
-INSERT INTO meal_ingredient (ingredient_id, meal_id, `count`, unit) VALUES (25, 4, 200.0, 'MILLILITER'); -- Red wine (optional)
+INSERT INTO meal_composition (ingredient_id, meal_id, `count`, unit) VALUES
+(18, 4, 1.0, 'KILOGRAM'), -- Sauerkraut
+(19, 4, 500.0, 'GRAM'), -- White cabbage
+(10, 4, 300.0, 'GRAM'), -- Sausage
+(20, 4, 200.0, 'GRAM'), -- Bacon
+(21, 4, 50.0, 'GRAM'), -- Dried mushrooms
+(22, 4, 100.0, 'GRAM'), -- Dried plums
+(16, 4, 2.0, 'PIECE'), -- Onion
+(23, 4, 2.0, 'PIECE'), -- Bay leaves
+(24, 4, 5.0, 'PIECE'), -- Allspice
+(13, 4, 1.0, 'TEASPOON'), -- Pepper
+(7, 4, 1.0, 'TEASPOON'), -- Salt
+(25, 4, 200.0, 'MILLILITER'); -- Red wine (optional)
 
-INSERT INTO meal_ingredient (ingredient_id, meal_id, `count`, unit) VALUES (26, 5, 400.0, 'GRAM'); -- Lasagna sheets
-INSERT INTO meal_ingredient (ingredient_id, meal_id, `count`, unit) VALUES (27, 5, 500.0, 'GRAM'); -- Ground meat (beef/pork)
-INSERT INTO meal_ingredient (ingredient_id, meal_id, `count`, unit) VALUES (28, 5, 400.0, 'GRAM'); -- Canned tomatoes
-INSERT INTO meal_ingredient (ingredient_id, meal_id, `count`, unit) VALUES (3, 5, 300.0, 'GRAM'); -- Mozzarella
-INSERT INTO meal_ingredient (ingredient_id, meal_id, `count`, unit) VALUES (11, 5, 100.0, 'GRAM'); -- Parmesan
-INSERT INTO meal_ingredient (ingredient_id, meal_id, `count`, unit) VALUES (12, 5, 3.0, 'CLOVE');  -- Garlic
-INSERT INTO meal_ingredient (ingredient_id, meal_id, `count`, unit) VALUES (16, 5, 1.0, 'PIECE');  -- Onion
-INSERT INTO meal_ingredient (ingredient_id, meal_id, `count`, unit) VALUES (6, 5, 2.0, 'TABLESPOON'); -- Olive oil
-INSERT INTO meal_ingredient (ingredient_id, meal_id, `count`, unit) VALUES (7, 5, 1.0, 'TEASPOON'); -- Salt
-INSERT INTO meal_ingredient (ingredient_id, meal_id, `count`, unit) VALUES (13, 5, 1.0, 'TEASPOON'); -- Pepper
-INSERT INTO meal_ingredient (ingredient_id, meal_id, `count`, unit) VALUES (29, 5, 500.0, 'MILLILITER'); -- Milk (for Béchamel)
-INSERT INTO meal_ingredient (ingredient_id, meal_id, `count`, unit) VALUES (17, 5, 50.0, 'GRAM'); -- Butter (for Béchamel)
-INSERT INTO meal_ingredient (ingredient_id, meal_id, `count`, unit) VALUES (4, 5, 50.0, 'GRAM');  -- Flour (for Béchamel)
+INSERT INTO meal_composition (ingredient_id, meal_id, `count`, unit) VALUES
+(26, 5, 400.0, 'GRAM'), -- Lasagna sheets
+(27, 5, 500.0, 'GRAM'), -- Ground meat (beef/pork)
+(28, 5, 400.0, 'GRAM'), -- Canned tomatoes
+(3, 5, 300.0, 'GRAM'), -- Mozzarella
+(11, 5, 100.0, 'GRAM'), -- Parmesan
+(12, 5, 3.0, 'CLOVE'),  -- Garlic
+(16, 5, 1.0, 'PIECE'),  -- Onion
+(6, 5, 2.0, 'TABLESPOON'), -- Olive oil
+(7, 5, 1.0, 'TEASPOON'), -- Salt
+(13, 5, 1.0, 'TEASPOON'), -- Pepper
+(29, 5, 500.0, 'MILLILITER'), -- Milk (for Béchamel)
+(17, 5, 50.0, 'GRAM'), -- Butter (for Béchamel)
+(4, 5, 50.0, 'GRAM');  -- Flour (for Béchamel)
 
 INSERT INTO account (login, password) VALUES
 ('admin', '$2a$10$BxVBlwD0Q4iwyjTOvx8Om.QvqiG7IoQqR4w2rYyxpPolwQaylUqzy'),
@@ -101,47 +109,56 @@ INSERT INTO account (login, password) VALUES
 ('user2', '$2a$10$Q3XaWvnDOmzcM7vkEhlDkegQK2fqYDuZ2IvHDdUy9H5m5jg.tpvBi'),
 ('user3', '$2a$10$f847O/RhszF4tXodQ.5Ce.NbSzN1nO8zfO4zHAROv1hrzil95U.pm');
 
-INSERT INTO user_preference (id) VALUES
+INSERT INTO family_preference (id) VALUES
 (1),
-(2),
-(3),
-(4);
+(2);
 
-INSERT INTO user (account_id,name,role,preference_id) VALUES
-(1,'adminek','ROLE_ADMIN', 1),
-(2,'user1','ROLE_USER', 2),
-(3,'user2','ROLE_USER', 3),
-(4,'user3','ROLE_USER', 4);
+INSERT INTO family(name, preference_id) VALUES
+('family_1',1),
+('family_2',2);
 
-INSERT INTO user_ingredient (user_id, name, ingredient_category) VALUES
+INSERT INTO user (account_id,name,role, current_family_id) VALUES
+(1,'admin','ROLE_ADMIN', null),
+(2,'user1','ROLE_USER',1),
+(3,'user2','ROLE_USER',1),
+(4,'user3','ROLE_USER',2);
+
+INSERT INTO user_family(family_id, user_id) VALUES
+(1,2),
+(2,2),
+(1,3),
+(2,4);
+
+INSERT INTO family_ingredient (family_id, name, ingredient_category) VALUES
 (2, 'Tofu', 'VEGAN'),
 (2, 'Chili Pepper', 'VEGAN');
 
-INSERT INTO user_meal (user_id, cuisine_id, name, description) VALUES (2, 1, 'Tofu Stir-Fry', 'Stir-fried tofu with vegetables and soy sauce');
-INSERT INTO user_meal (user_id, cuisine_id, name, description) VALUES (2, 1, 'Spicy Veggie Wrap', 'A wrap with vegetables and spicy tofu');
-INSERT INTO user_meal (user_id, cuisine_id, name, description) VALUES (2, 1, 'Chili Tofu Salad', 'Fresh salad with chili tofu and greens');
+INSERT INTO family_meal (family_id, cuisine_id, name, description, image_url) VALUES
+(2, 1, 'Tofu Stir-Fry', 'Stir-fried tofu with vegetables and soy sauce','http://localhost:8080/images/default.jpg'),
+(2, 1, 'Spicy Veggie Wrap', 'A wrap with vegetables and spicy tofu','http://localhost:8080/images/default.jpg'),
+(2, 1, 'Chili Tofu Salad', 'Fresh salad with chili tofu and greens','http://localhost:8080/images/default.jpg');
 
-INSERT INTO user_meal_ingredient (user_meal_id, ingredient_id, user_ingredient_id, `count`, unit) VALUES
+INSERT INTO family_meal_composition (family_meal_id, ingredient_id, family_ingredient_id, `count`, unit) VALUES
 (1, NULL,   1,      200.0,  'GRAM'), -- Tofu (user ingredient)
 (1, 12,     NULL,   2.0,    'CLOVE'), -- Garlic
 (1, 6,      NULL,   2.0,    'TABLESPOON'), -- Olive oil
 (1, 16,     NULL,   1.0,    'PIECE'), -- Onion
 (1, NULL,   2,      50.0,   'MILLILITER'); -- Soy sauce (user ingredient)
 
-INSERT INTO user_meal_ingredient (user_meal_id, ingredient_id, user_ingredient_id, `count`, unit) VALUES
+INSERT INTO family_meal_composition (family_meal_id, ingredient_id, family_ingredient_id, `count`, unit) VALUES
 (2,  NULL,   1,      150.0,  'GRAM'), -- Tofu (user ingredient)
 (2,  NULL,   2,      1.0,    'PIECE'), -- Chili Pepper (user ingredient)
 (2,  1,      NULL,   1.0,    'PIECE'), -- Tomato
 (2,  3,      NULL,   50.0,   'GRAM'), -- Lettuce (user ingredient)
 (2,  4,      NULL,   1.0,    'PIECE'), -- Tortilla (user ingredient)
-(2,  6,      NULL,   1.0,    'TABLESPOON'); -- Olive oil
+(2,  6,      NULL,   1.0,    'TABLESPOON'); -- Olive oil(20, 4, 200.0, 'GRAM')
 
-INSERT INTO user_preference_cuisine (user_preference_id, cuisine_id) VALUES
+INSERT INTO family_preference_cuisine (family_preference_id, cuisine_id) VALUES
 (1,1),
 (1,2),
 (2,1);
 
-INSERT INTO user_preference_without_ingredient (user_preference_id, ingredient_id) VALUES
+INSERT INTO family_preference_without_ingredient (family_preference_id, ingredient_id) VALUES
 (2,5);
 
 

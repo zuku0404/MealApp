@@ -1,9 +1,7 @@
 package com.example.SpringSecondAppTest.user;
 
 import com.example.SpringSecondAppTest.account.Account;
-import com.example.SpringSecondAppTest.preferences.UserPreference;
-import com.example.SpringSecondAppTest.user_ingredient.UserIngredient;
-import com.example.SpringSecondAppTest.user_meal.UserMeal;
+import com.example.SpringSecondAppTest.family.Family;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -29,24 +27,26 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @OneToOne(cascade = CascadeType.REMOVE)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private Account account;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "preference_id")
-    private UserPreference preference;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "current_family_id")
+    private Family currentFamily;
 
-    @OneToMany(mappedBy = "user")
-    @Builder.Default
-    private Set<UserIngredient> ingredients = new HashSet<>();
-
-    @OneToMany(mappedBy = "user")
-    @Builder.Default
-    private Set<UserMeal> meals = new HashSet<>();
+    @ManyToMany(mappedBy = "familyMembers")
+    private final Set<Family> families = new HashSet<>();
 
     public User(String name, Role role, Account account) {
         this.name = name;
         this.role = role;
+        this.account = account;
+    }
+
+    public User(String name, Role role, Family currentFamily, Account account) {
+        this.name = name;
+        this.role = role;
+        this.currentFamily = currentFamily;
         this.account = account;
     }
 
@@ -84,42 +84,4 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", role=" + role +
-                ", account=" + account +
-                '}';
-    }
 }
-
-
-//@Getter
-//@Setter
-//@NoArgsConstructor
-//@AllArgsConstructor
-//@Builder
-//@Entity
-//public class User {
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    private Long id;
-//    private String name;
-//    @Enumerated(EnumType.STRING)
-//    private Role role;
-//
-//    @OneToOne(cascade = CascadeType.REMOVE)
-//    private Account account;
-//
-//    @OneToMany(mappedBy = "user")
-//    private Set<UserIngredient> ingredients;
-//
-//    @OneToMany(mappedBy = "user")
-//    private Set<UserMeal> meals;
-//
-//    @OneToMany(mappedBy = "user")
-//    private Set<UserCuisinePreference> userCuisinePreferences;
-//}

@@ -2,14 +2,15 @@ package com.example.SpringSecondAppTest.meal.dto;
 
 
 import com.example.SpringSecondAppTest.cuisine.CuisineType;
-import com.example.SpringSecondAppTest.ingredient_meal.dto.IngredientsMealsDto;
+import com.example.SpringSecondAppTest.meal_composition.dto.MealCompositionDto;
 
-import java.util.List;
+import java.util.Set;
 
 public record DetailedMealDto(
         Long id,
         String name,
         String description,
+        String imageUrl,
         CuisineType cuisineType,
-        List<IngredientsMealsDto> ingredientMeals){
+        Set<MealCompositionDto> mealCompositions){
 }

@@ -1,15 +1,16 @@
 package com.example.SpringSecondAppTest.ingerdient;
 
 import com.example.SpringSecondAppTest.exception.ErrorMessage;
-import com.example.SpringSecondAppTest.exception.IngredientAlreadyExistException;
-import com.example.SpringSecondAppTest.exception.IngredientNotFoundException;
+import com.example.SpringSecondAppTest.exception.custom.IngredientAlreadyExistException;
+import com.example.SpringSecondAppTest.exception.custom.IngredientNotFoundException;
+import com.example.SpringSecondAppTest.family.Family;
 import com.example.SpringSecondAppTest.ingerdient.dto.IngredientDto;
 import com.example.SpringSecondAppTest.ingerdient.dto.IngredientDtoMapper;
 import com.example.SpringSecondAppTest.ingerdient.dto.IngredientWithoutIdDto;
-import com.example.SpringSecondAppTest.user_ingredient.UserIngredient;
-import com.example.SpringSecondAppTest.user_ingredient.UserIngredientRepository;
-import com.example.SpringSecondAppTest.user_ingredient_meal.UserIngredientMeal;
-import com.example.SpringSecondAppTest.user_ingredient_meal.UserIngredientMealRepository;
+import com.example.SpringSecondAppTest.family_ingredient.FamilyIngredient;
+import com.example.SpringSecondAppTest.family_ingredient.FamilyIngredientRepository;
+import com.example.SpringSecondAppTest.family_composition.FamilyMealComposition;
+import com.example.SpringSecondAppTest.family_composition.FamilyMealCompositionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,8 +22,8 @@ import java.util.List;
 public class IngredientService {
 
     private final IngredientRepository ingredientRepository;
-    private final UserIngredientMealRepository userIngredientMealRepository;
-    private final UserIngredientRepository userIngredientRepository;
+    private final FamilyMealCompositionRepository familyMealCompositionRepository;
+    private final FamilyIngredientRepository familyIngredientRepository;
 
     public List<IngredientDto> findAll(List<IngredientCategory> ingredientCategory) {
         return IngredientDtoMapper.mapToIngredientDtos(ingredientRepository.findForCategories(ingredientCategory));
@@ -56,17 +57,17 @@ public class IngredientService {
     @Transactional
     public void delete(Long id) {
         ingredientRepository.findById(id).ifPresent(ingredient -> {
-            userIngredientMealRepository.findUserIdsForIngredientId(id)
+            familyMealCompositionRepository.findFamilyIdsForIngredientId(id)
                     .forEach(user -> {
-                        UserIngredient newUserIngredient = IngredientDtoMapper.mapToUserIngredient(ingredient);
-                        newUserIngredient.setUser(user);
-                        List<UserIngredientMeal> userIngredientMeals = userIngredientMealRepository.findByIngredientIdAndUserId(ingredient.getId(), user.getId());
-                        userIngredientMeals.forEach(userIngredientMeal -> {
+                        FamilyIngredient newFamilyIngredient = IngredientDtoMapper.mapToUserIngredient(ingredient);
+                        newFamilyIngredient.setFamily(user);
+                        List<FamilyMealComposition> familyMealCompositions = familyMealCompositionRepository.findByIngredientIdAndUserId(ingredient.getId(), user.getId());
+                        familyMealCompositions.forEach(userIngredientMeal -> {
                             userIngredientMeal.setIngredient(null);
-                            userIngredientMeal.setUserIngredient(newUserIngredient);
+                            userIngredientMeal.setFamilyIngredient(newFamilyIngredient);
                         });
-                        newUserIngredient.setIngredientMeals(userIngredientMeals);
-                        userIngredientRepository.save(newUserIngredient);
+                        newFamilyIngredient.setIngredientMeals(familyMealCompositions);
+                        familyIngredientRepository.save(newFamilyIngredient);
                     });
             ingredientRepository.deleteById(id);
         });
@@ -77,14 +78,15 @@ public class IngredientService {
         if (ingredientRepository.findByName(name).isPresent()) {
             throw new IngredientAlreadyExistException(ErrorMessage.INGREDIENT_ALREADY_EXIST);
         }
-        userIngredientRepository.findByName(name).forEach(ingredient -> {
-                    String updatedUserName = name + "_user";
+        familyIngredientRepository.findByName(name).forEach(ingredient -> {
+                    Family family = ingredient.getFamily();
+                    String updatedIngredientName = name + "_" + family.getName();
                     int iterator = 1;
-                    Long userIdContainUpdatedIngredientName = ingredient.getUser().getId();
-                    while (userIngredientRepository.findByUserIdAndName(userIdContainUpdatedIngredientName, updatedUserName).isPresent()) {
-                        updatedUserName += iterator++;
+                    Long familyIdContainUpdatedIngredientName = family.getId();
+                    while (familyIngredientRepository.findByFamilyIdAndName(familyIdContainUpdatedIngredientName, updatedIngredientName).isPresent()) {
+                        updatedIngredientName += iterator++;
                     }
-                    ingredient.setName(updatedUserName);
+                    ingredient.setName(updatedIngredientName);
                 }
         );
     }

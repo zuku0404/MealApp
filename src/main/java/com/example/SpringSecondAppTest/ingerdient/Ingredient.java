@@ -1,7 +1,7 @@
 package com.example.SpringSecondAppTest.ingerdient;
 
-import com.example.SpringSecondAppTest.ingredient_meal.IngredientMeal;
-import com.example.SpringSecondAppTest.user_ingredient_meal.UserIngredientMeal;
+import com.example.SpringSecondAppTest.meal_composition.MealComposition;
+import com.example.SpringSecondAppTest.family_composition.FamilyMealComposition;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -26,12 +26,17 @@ public class Ingredient {
     private IngredientCategory ingredientCategory;
 
     @OneToMany(mappedBy = "ingredient", cascade = CascadeType.REMOVE)
-    private List<IngredientMeal> ingredientMeals;
+    private List<MealComposition> mealCompositions;
 
     @OneToMany(mappedBy = "ingredient")
-    private List<UserIngredientMeal> userIngredientMeals;
+    private List<FamilyMealComposition> familyMealCompositions;
 
     public Ingredient(String name, IngredientCategory ingredientCategory) {
+        this.name = name;
+        this.ingredientCategory = ingredientCategory;
+    }
+    public Ingredient(Long id, String name, IngredientCategory ingredientCategory) {
+        this.id = id;
         this.name = name;
         this.ingredientCategory = ingredientCategory;
     }

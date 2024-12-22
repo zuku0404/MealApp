@@ -8,6 +8,7 @@ import java.util.Optional;
 
 @Repository
 public interface AccountRepository extends JpaRepository<Account, Long> {
-    @Query("SELECT a FROM Account a WHERE login = ?1")
+    @Query("SELECT a FROM Account a " +
+            "WHERE login = :login")
     Optional<Account> findByLogin(String login);
 }

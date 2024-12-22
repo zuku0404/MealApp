@@ -1,16 +1,15 @@
 package com.example.SpringSecondAppTest.meal;
 
 import com.example.SpringSecondAppTest.cuisine.Cuisine;
-import com.example.SpringSecondAppTest.cuisine.CuisineType;
-import com.example.SpringSecondAppTest.ingredient_meal.IngredientMeal;
+import com.example.SpringSecondAppTest.meal_composition.MealComposition;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -23,9 +22,11 @@ public class Meal {
     private Long id;
     private String name;
     private String description;
+    @Column(name = "image_url")
+    private String imageUrl;
 
     @OneToMany(mappedBy = "meal", cascade = CascadeType.ALL)
-    private List<IngredientMeal> ingredientMeals = new ArrayList<>();
+    private Set<MealComposition> mealCompositions = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cuisine_id")
@@ -37,8 +38,16 @@ public class Meal {
         this.cuisine = cuisine;
     }
 
-    public void addIngredientMeal(IngredientMeal ingredientMeal) {
-        ingredientMeals.add(ingredientMeal);
-        ingredientMeal.setMeal(this);
+    public Meal(Long id, String name, String description, String imageUrl, Cuisine cuisine) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.imageUrl = imageUrl;
+        this.cuisine = cuisine;
+    }
+
+    public void addIngredientMeal(MealComposition mealComposition) {
+        mealCompositions.add(mealComposition);
+        mealComposition.setMeal(this);
     }
 }
