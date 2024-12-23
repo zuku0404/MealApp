@@ -118,11 +118,11 @@ create table family_preference_without_family_ingredient (
 );
 
 create view global_family_ingredients_view as
-    select ROW_NUMBER() OVER (ORDER BY source, id) AS row_id, id, name, source, family_id
+    select ROW_NUMBER() OVER (ORDER BY source, id) AS row_id, id, name, source, family_id, ingredient_category
     from (
-    select id, name, 'GLOBAL' as source, null as family_id from ingredient
+    select id, name, 'GLOBAL' as source, null as family_id, ingredient_category from ingredient
     union all
-    select id, name, 'FAMILY' as source, family_id from family_ingredient) AS combined;
+    select id, name, 'FAMILY' as source, family_id, ingredient_category from family_ingredient) AS combined;
 
 create view global_family_meals_view as
     select ROW_NUMBER() OVER (ORDER BY source, id) AS row_id, id as meal_id, family_id, name, image_url, description, source

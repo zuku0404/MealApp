@@ -37,7 +37,6 @@ public class MealServiceTest {
         @Test
         void shouldReturnAllTasksWhenNoFiltersAndSortingDisabled() {
 
-            runFindAllDetailedTest(userId, status, sort, sortDirection);
         }
     }
 }

@@ -1,10 +1,9 @@
 package com.example.SpringSecondAppTest.family_ingredient.dto;
 
 import com.example.SpringSecondAppTest.family.Family;
+import com.example.SpringSecondAppTest.family_ingredient.FamilyIngredient;
 import com.example.SpringSecondAppTest.ingerdient.dto.IngredientDto;
 import com.example.SpringSecondAppTest.ingerdient.dto.IngredientWithoutIdDto;
-import com.example.SpringSecondAppTest.user.User;
-import com.example.SpringSecondAppTest.family_ingredient.FamilyIngredient;
 
 import java.util.List;
 

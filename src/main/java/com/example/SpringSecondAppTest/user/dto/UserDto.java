@@ -1,9 +1,11 @@
 package com.example.SpringSecondAppTest.user.dto;
 
-import lombok.Builder;
+import com.example.SpringSecondAppTest.family.dto.FamilyDto;
+import com.example.SpringSecondAppTest.user.Role;
 
-@Builder
 public record UserDto(
         Long id,
-        String name) {
+        String name,
+        Role role,
+        FamilyDto currentFamily) {
 }

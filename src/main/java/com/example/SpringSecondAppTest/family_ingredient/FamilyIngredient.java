@@ -40,6 +40,13 @@ public class FamilyIngredient {
         this.ingredientCategory = ingredientCategory;
     }
 
+    public FamilyIngredient(Long id, String name, IngredientCategory ingredientCategory, Family family) {
+        this.id = id;
+        this.name = name;
+        this.ingredientCategory = ingredientCategory;
+        this.family = family;
+    }
+
     public FamilyIngredient(String name, IngredientCategory ingredientCategory, Family family) {
         this.name = name;
         this.ingredientCategory = ingredientCategory;

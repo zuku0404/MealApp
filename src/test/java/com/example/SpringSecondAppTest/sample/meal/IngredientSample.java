@@ -1,4 +1,4 @@
-package com.example.SpringSecondAppTest.sample;
+package com.example.SpringSecondAppTest.sample.meal;
 
 import com.example.SpringSecondAppTest.ingerdient.Ingredient;
 import com.example.SpringSecondAppTest.ingerdient.IngredientCategory;
@@ -8,6 +8,8 @@ import java.util.Arrays;
 import java.util.List;
 
 public class IngredientSample {
+    private IngredientSample(){}
+
     public static final List<Ingredient> INGREDIENTS = new ArrayList<>(Arrays.asList(
             new Ingredient(1L, "Tomato", IngredientCategory.VEGETARIAN),
             new Ingredient(2L, "Mozzarella", IngredientCategory.VEGETARIAN),

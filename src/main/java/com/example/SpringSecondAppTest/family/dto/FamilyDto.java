@@ -1,14 +1,15 @@
 package com.example.SpringSecondAppTest.family.dto;
 
-import com.example.SpringSecondAppTest.user.dto.UserDto;
-import lombok.Builder;
+import com.example.SpringSecondAppTest.ingerdient.dto.IngredientDto;
+import com.example.SpringSecondAppTest.meal.dto.BasicMealDto;
+import com.example.SpringSecondAppTest.user_family.dto.UserFamilyWithoutFamilyDto;
 
-import java.util.Set;
+import java.util.List;
 
-@Builder
 public record FamilyDto(
         Long id,
         String name,
-        Set<UserDto> users
-){
+        List<IngredientDto> familyIngredients,
+        List<BasicMealDto> familyMeals,
+        List<UserFamilyWithoutFamilyDto> userFamily) {
 }

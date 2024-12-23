@@ -11,6 +11,8 @@ import com.example.SpringSecondAppTest.family.FamilyRepository;
 import com.example.SpringSecondAppTest.user.Role;
 import com.example.SpringSecondAppTest.user.User;
 import com.example.SpringSecondAppTest.user.UserRepository;
+import com.example.SpringSecondAppTest.user_family.UserFamily;
+import com.example.SpringSecondAppTest.user_family.UserFamilyRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -28,6 +30,7 @@ public class AuthenticationService {
     private final UserRepository userRepository;
     private final AccountRepository accountRepository;
     private final FamilyRepository familyRepository;
+    private final UserFamilyRepository userFamilyRepository;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
     private final PasswordEncoder passwordEncoder;
@@ -42,8 +45,7 @@ public class AuthenticationService {
         Account account = createAccount(request);
         Family family = getOrCreateFamily(request);
         User user = createUser(request, account, family);
-        family.addUserToFamily(user);
-        familyRepository.save(family);
+        userFamilyRepository.save(new UserFamily(user, family));
 
         String jwtToken = jwtService.generateToken(user);
         return ResponseEntity.status(HttpStatus.CREATED)

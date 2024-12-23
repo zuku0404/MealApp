@@ -9,22 +9,18 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface GlobalAndFamilyMealsViewRepository extends JpaRepository<GlobalAndFamilyMealsView,Long> {
-    @Query ("SELECT gafmv FROM GlobalAndFamilyMealsView gafmv " +
+public interface GlobalAndFamilyMealsViewRepository extends JpaRepository<GlobalAndFamilyMealsView, Long> {
+    @Query("SELECT gafmv FROM GlobalAndFamilyMealsView gafmv " +
             "WHERE gafmv.familyId is NULL OR gafmv.familyId = :familyId")
-    List<GlobalAndFamilyMealsView> findAllForFamily(Long familyId);
+    List<GlobalAndFamilyMealsView> findAllForFamily(@Param("familyId") Long familyId);
 
-    @Query ("SELECT gafmv FROM GlobalAndFamilyMealsView gafmv " +
+    @Query("SELECT gafmv FROM GlobalAndFamilyMealsView gafmv " +
             "WHERE gafmv.familyId = :familyId")
-    List<GlobalAndFamilyMealsView> findAllCreatedByFamily(Long familyId);
-
-    @Query ("SELECT gafmv FROM GlobalAndFamilyMealsView gafmv " +
-            "WHERE gafmv.familyId is NULL")
-    List<GlobalAndFamilyMealsView> findForUnloggedUser();
+    List<GlobalAndFamilyMealsView> findAllCreatedByFamily(@Param("familyId") Long familyId);
 
     @Query("SELECT gafmv FROM GlobalAndFamilyMealsView gafmv " +
             "WHERE gafmv.name = :meal_name AND (gafmv.familyId is NULL OR gafmv.familyId = :family_id)")
     Optional<GlobalAndFamilyMealsView> findByNameAndAvailableForFamilyId(@Param("meal_name") String mealName, @Param("family_id") Long familyId);
 
-    List<GlobalAndFamilyMealsView> findByName(String name);
+    List<GlobalAndFamilyMealsView> findByName(@Param("name") String name);
 }

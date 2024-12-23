@@ -2,9 +2,8 @@ package com.example.SpringSecondAppTest.preferences;
 
 import com.example.SpringSecondAppTest.cuisine.Cuisine;
 import com.example.SpringSecondAppTest.family.Family;
-import com.example.SpringSecondAppTest.ingerdient.Ingredient;
-import com.example.SpringSecondAppTest.user.User;
 import com.example.SpringSecondAppTest.family_ingredient.FamilyIngredient;
+import com.example.SpringSecondAppTest.ingerdient.Ingredient;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

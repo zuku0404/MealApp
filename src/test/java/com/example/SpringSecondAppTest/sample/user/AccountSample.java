@@ -1,4 +1,4 @@
-package com.example.SpringSecondAppTest.sample;
+package com.example.SpringSecondAppTest.sample.user;
 
 import com.example.SpringSecondAppTest.account.Account;
 
@@ -7,6 +7,8 @@ import java.util.Arrays;
 import java.util.List;
 
 public class AccountSample {
+    private AccountSample(){}
+
     public static final List<Account> ACCOUNTS = new ArrayList<>(Arrays.asList(
             new Account(1L, "admin","admin"),
             new Account(2L, "user1","user1"),

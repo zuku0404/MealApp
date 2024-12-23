@@ -14,6 +14,7 @@ import com.example.SpringSecondAppTest.user.User;
 import com.example.SpringSecondAppTest.views.Source;
 import com.example.SpringSecondAppTest.views.global_user_ingredients_view.GlobalAndFamilyIngredientsView;
 import com.example.SpringSecondAppTest.views.global_user_ingredients_view.GlobalAndFamilyIngredientsViewRepository;
+import com.example.SpringSecondAppTest.views.global_user_ingredients_view.mapper.GlobalAndFamilyIngredientsViewMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,9 +36,9 @@ public class FamilyIngredientService {
     }
 
     public List<IngredientDto> getAllAccessibleIngredients(User user) {
-        List<GlobalAndFamilyIngredientsView> globalAndFamilyIngredientsViews = globalAndFamilyIngredientsViewRepository.findAllCreatedByFamily(user.getCurrentFamily().getId());
-        return GlobalAndFamilyIngredientsViewMapper.mapToBasicMealDtos(globalAndFamilyIngredientsViews);
-    }
+        List<GlobalAndFamilyIngredientsView> globalAndFamilyIngredientsViews =
+                globalAndFamilyIngredientsViewRepository.findAllCreatedByFamily(user.getCurrentFamily().getId());
+        return GlobalAndFamilyIngredientsViewMapper.mapToIngredientsDtos(globalAndFamilyIngredientsViews);
     }
 
     public IngredientDto getIngredient(User user, Long id) {

@@ -2,6 +2,7 @@ package com.example.SpringSecondAppTest.user;
 
 import com.example.SpringSecondAppTest.account.Account;
 import com.example.SpringSecondAppTest.family.Family;
+import com.example.SpringSecondAppTest.user_family.UserFamily;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -34,8 +35,8 @@ public class User implements UserDetails {
     @JoinColumn(name = "current_family_id")
     private Family currentFamily;
 
-    @ManyToMany(mappedBy = "familyMembers")
-    private final Set<Family> families = new HashSet<>();
+    @OneToMany(mappedBy = "familyMember")
+    private final Set<UserFamily> familyMembers = new HashSet<>();
 
     public User(String name, Role role, Account account) {
         this.name = name;

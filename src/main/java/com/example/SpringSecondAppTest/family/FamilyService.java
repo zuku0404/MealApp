@@ -7,11 +7,12 @@ import com.example.SpringSecondAppTest.family.dto.FamilyDtoWithoutId;
 import com.example.SpringSecondAppTest.family.dto.FamilyMapper;
 import com.example.SpringSecondAppTest.user.User;
 import com.example.SpringSecondAppTest.user.UserRepository;
+import com.example.SpringSecondAppTest.user_family.UserFamily;
+import com.example.SpringSecondAppTest.user_family.UserFamilyRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -20,6 +21,7 @@ import java.util.Objects;
 public class FamilyService {
     private final FamilyRepository familyRepository;
     private final UserRepository userRepository;
+    private final UserFamilyRepository userFamilyRepository;
 
     public Long getAccessToken(User user) {
         return user.getCurrentFamily().getId();
@@ -33,23 +35,21 @@ public class FamilyService {
 
     public List<FamilyDto> getFamiliesForUser(User user) {
         return FamilyMapper.mapToFamilyDtos(
-                familyRepository.findByUserId(user.getId()));
+                userFamilyRepository.findFamiliesByUserId(user.getId()));
     }
 
     @Transactional
     public FamilyDto createNewFamily(User user, FamilyDtoWithoutId familyDetails) {
-        Family family = new Family(familyDetails.name(), Collections.singleton(user));
-        family = familyRepository.save(family);
+        Family family = familyRepository.save(new Family(familyDetails.name()));
         user.setCurrentFamily(family);
         userRepository.save(user);
+        userFamilyRepository.save(new UserFamily(user, family));
         return FamilyMapper.mapToFamilyDto(family);
     }
 
     @Transactional
-    public FamilyDto editFamilyDetails(User authenticatedUser, Long id, FamilyDtoWithoutId familyDetails) {
-        User user = findUserByIdOrThrow(authenticatedUser.getId());
-        Family family = findFamilyByIdOrThrow(id);
-        validateUserInFamily(user, family);
+    public FamilyDto editFamilyDetails(User user, Long familyId, FamilyDtoWithoutId familyDetails) {
+        Family family = getValidatedFamilyForUser(user, familyId);
         if (!Objects.equals(family.getName(), familyDetails.name())) {
             family.setName(familyDetails.name());
             family = familyRepository.save(family);
@@ -58,39 +58,37 @@ public class FamilyService {
     }
 
     @Transactional
-    public FamilyDto switchCurrentFamily(User authenticatedUser, Long familyId) {
-        User user = findUserByIdOrThrow(authenticatedUser.getId());
-        Family family = findFamilyByIdOrThrow(familyId);
-        validateUserInFamily(user, family);
+    public FamilyDto switchCurrentFamily(User user, Long familyId) {
+        Family family = getValidatedFamilyForUser(user, familyId);
         user.setCurrentFamily(family);
         User updatedUser = userRepository.save(user);
         return FamilyMapper.mapToFamilyDto(updatedUser.getCurrentFamily());
     }
 
     @Transactional
-    public void addUserToExistingFamily(User authenticatedUser, Long familyId) {
-        User user = findUserByIdOrThrow(authenticatedUser.getId());
-        Family family = findFamilyByIdOrThrow(familyId);
-        if (family.getFamilyMembers().contains(user)) {
+    public void addUserToExistingFamily(User user, Long familyId) {
+        if (userFamilyRepository.findFamilyByUserIdAndFamilyId(user.getId(), familyId).isPresent()) {
             throw new UserAlreadyInFamilyException(ErrorMessage.USER_ALREADY_IN_FAMILY);
         }
-        family.addUserToFamily(user);
-        family = familyRepository.save(family);
+        Family family = familyRepository.findById(familyId)
+                .orElseThrow(() -> new FamilyNotFoundException(ErrorMessage.FAMILY_NOT_FOUND) );
+        userFamilyRepository.save(new UserFamily(user, family));
         user.setCurrentFamily(family);
         userRepository.save(user);
     }
 
     @Transactional
-    public void leaveFamily(User authenticatedUser, Long familyId) {
-        User user = findUserByIdOrThrow(authenticatedUser.getId());
-        Family family = findFamilyByIdOrThrow(familyId);
-        validateUserInFamily(user, family);
-        validateMinimumFamilyMembership(user);
-        if (family.getFamilyMembers().size() == 1) {
+    public void leaveFamily(User user, Long familyId) {
+        Family family = getValidatedFamilyForUser(user, familyId);
+        List<Family> userFamilies = userFamilyRepository.findFamiliesByUserId(user.getId());
+        if (userFamilies.size() <= 1) {
+            throw new MinimumFamilyMembershipException(ErrorMessage.MINIMUM_FAMILY_MEMBERSHIP);
+        }
+        if (family.getFamilies().size() == 1) {
             familyRepository.deleteById(familyId);
         }
-        family.removeUserFromFamily(user);
-        setNewCurrentFamilyIfNeeded(user, family);
+        userFamilyRepository.deleteFamilyByUserIdAndFamilyId(user.getId(),familyId);
+        setNewCurrentFamilyIfNeeded(user, family,userFamilies);
     }
 
     private Family findFamilyByIdOrThrow(Long familyId) {
@@ -98,30 +96,18 @@ public class FamilyService {
                 .orElseThrow(() -> new FamilyNotFoundException(ErrorMessage.FAMILY_NOT_FOUND));
     }
 
-    private User findUserByIdOrThrow(Long userId) {
-        return userRepository.findById(userId)
-                .orElseThrow(() -> new UserNotFoundException(ErrorMessage.USER_NOT_FOUND));
-    }
-
-    private void setNewCurrentFamilyIfNeeded(User user, Family family) {
+    private void setNewCurrentFamilyIfNeeded(User user, Family family, List<Family> userFamilies) {
         if (user.getCurrentFamily().equals(family)) {
-            Family firstFamily = user.getFamilies().stream()
+            Family firstFindFamily = userFamilies.stream()
+                    .filter(f -> !f.equals(family))
                     .findFirst()
                     .orElseThrow(() -> new UserHasNoFamiliesException(ErrorMessage.USER_HAS_NO_FAMILIES));
-            user.setCurrentFamily(firstFamily);
+            user.setCurrentFamily(firstFindFamily);
         }
     }
 
-    private void validateMinimumFamilyMembership(User user) {
-        List<Family> userFamilies = familyRepository.findByUserId(user.getId());
-        if (userFamilies.size() <= 1) {
-            throw new MinimumFamilyMembershipException(ErrorMessage.MINIMUM_FAMILY_MEMBERSHIP);
-        }
-    }
-
-    private void validateUserInFamily(User user, Family family) {
-        if (!family.getFamilyMembers().contains(user)) {
-            throw new UserNotInFamilyException(ErrorMessage.USER_NOT_IN_FAMILY);
-        }
+    private Family getValidatedFamilyForUser(User user, Long familyId) {
+        return userFamilyRepository.findFamilyByUserIdAndFamilyId(user.getId(), familyId)
+                .orElseThrow(() -> new UserNotInFamilyException(ErrorMessage.USER_NOT_IN_FAMILY));
     }
 }

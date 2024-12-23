@@ -1,10 +1,11 @@
 package com.example.SpringSecondAppTest.family.dto;
 
 import com.example.SpringSecondAppTest.family.Family;
-import com.example.SpringSecondAppTest.user.dto.UserMapper;
+import com.example.SpringSecondAppTest.family_ingredient.dto.FamilyIngredientDtoMapper;
+import com.example.SpringSecondAppTest.family_meal.dto.FamilyMealDtoMapper;
+import com.example.SpringSecondAppTest.user_family.dto.UserFamilyDtoMapper;
 
 import java.util.List;
-import java.util.Set;
 
 public class FamilyMapper {
     private FamilyMapper() {
@@ -17,10 +18,11 @@ public class FamilyMapper {
     }
 
     public static FamilyDto mapToFamilyDto(Family family) {
-        return new FamilyDto.FamilyDtoBuilder()
-                .id(family.getId())
-                .name(family.getName())
-                .users(UserMapper.mapToUserDtos(family.getFamilyMembers()))
-                .build();
+        return new FamilyDto(
+                family.getId(),
+                family.getName(),
+                FamilyIngredientDtoMapper.mapToIngredientsMealsDtos(family.getIngredients().stream().toList()),
+                FamilyMealDtoMapper.mapToBasicMealDtos(family.getMeals().stream().toList()),
+                UserFamilyDtoMapper.mapToUserFamilyWithoutFamilyDtos(family.getFamilies()));
     }
 }

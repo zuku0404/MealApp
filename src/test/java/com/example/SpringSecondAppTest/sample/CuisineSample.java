@@ -8,6 +8,8 @@ import java.util.Arrays;
 import java.util.List;
 
 public class CuisineSample {
+    private CuisineSample() {}
+
     public static final List<Cuisine> CUISINES = new ArrayList<>(Arrays.asList(
             new Cuisine(1L, CuisineType.ITALIAN),
             new Cuisine(2L, CuisineType.POLISH)
