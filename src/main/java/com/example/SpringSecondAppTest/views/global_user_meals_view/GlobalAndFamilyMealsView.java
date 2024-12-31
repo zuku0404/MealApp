@@ -3,13 +3,9 @@ package com.example.SpringSecondAppTest.views.global_user_meals_view;
 
 import com.example.SpringSecondAppTest.views.Source;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.Data;
 
-@Getter
-@Setter
-@ToString
+@Data
 @Entity
 @Table(name = "global_family_meals_view")
 public class GlobalAndFamilyMealsView {

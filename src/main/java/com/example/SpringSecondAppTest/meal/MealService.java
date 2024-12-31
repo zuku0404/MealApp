@@ -3,28 +3,25 @@ package com.example.SpringSecondAppTest.meal;
 import com.example.SpringSecondAppTest.cuisine.Cuisine;
 import com.example.SpringSecondAppTest.cuisine.CuisineRepository;
 import com.example.SpringSecondAppTest.cuisine.CuisineType;
-import com.example.SpringSecondAppTest.exception.*;
+import com.example.SpringSecondAppTest.exception.ErrorMessage;
 import com.example.SpringSecondAppTest.exception.custom.CuisineNotFoundException;
 import com.example.SpringSecondAppTest.exception.custom.MealAlreadyExistException;
 import com.example.SpringSecondAppTest.exception.custom.MealNotFoundException;
 import com.example.SpringSecondAppTest.exception.custom.MealWithoutIngredientException;
+import com.example.SpringSecondAppTest.family_meal.FamilyMealRepository;
 import com.example.SpringSecondAppTest.ingerdient.Ingredient;
 import com.example.SpringSecondAppTest.ingerdient.IngredientRepository;
-import com.example.SpringSecondAppTest.meal_composition.MealComposition;
-import com.example.SpringSecondAppTest.meal_composition.MealCompositionRepository;
-import com.example.SpringSecondAppTest.meal_composition.dto.MealCompositionWithoutIdDto;
 import com.example.SpringSecondAppTest.meal.dto.BasicMealDto;
 import com.example.SpringSecondAppTest.meal.dto.DetailedMealDto;
 import com.example.SpringSecondAppTest.meal.dto.DetailedMealWithoutIdDto;
 import com.example.SpringSecondAppTest.meal.dto.MealDtoMapper;
-import com.example.SpringSecondAppTest.family_meal.FamilyMealRepository;
+import com.example.SpringSecondAppTest.meal_composition.MealComposition;
+import com.example.SpringSecondAppTest.meal_composition.MealCompositionRepository;
+import com.example.SpringSecondAppTest.meal_composition.dto.MealCompositionWithoutIdDto;
 import com.example.SpringSecondAppTest.views.global_user_meals_view.GlobalAndFamilyMealsView;
 import com.example.SpringSecondAppTest.views.global_user_meals_view.GlobalAndFamilyMealsViewRepository;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -41,10 +38,8 @@ public class MealService {
     private final FamilyMealRepository familyMealRepository;
     private final MealCompositionRepository mealCompositionRepository;
     private final GlobalAndFamilyMealsViewRepository globalAndFamilyMealsViewRepository;
-    private final Logger logger = LoggerFactory.getLogger(this.getClass().getName());
 
     public List<BasicMealDto> getAllWithBasicData(List<CuisineType> cuisineTypes) {
-        logger.info("Call method findMeals");
         return MealDtoMapper.mapToBasicMealDtos(
                 mealRepository.findByCuisineTypes(cuisineTypes)
         );

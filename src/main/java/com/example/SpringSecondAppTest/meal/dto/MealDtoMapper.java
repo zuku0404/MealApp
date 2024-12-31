@@ -16,7 +16,7 @@ public class MealDtoMapper {
                 .toList();
     }
 
-    private static BasicMealDto mapToBasicMealDto(Meal meal) {
+    public static BasicMealDto mapToBasicMealDto(Meal meal) {
         return new BasicMealDto(
                 meal.getId(),
                 meal.getName(),
