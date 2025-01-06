@@ -5,12 +5,12 @@ INSERT INTO cuisine (name) VALUES
 ('ITALIAN'),
 ('POLISH');
 
-INSERT INTO meal (cuisine_id, name, description, image_url) VALUES
-(1, 'Margherita Pizza', 'Classic Italian pizza with tomato and cheese', 'http://localhost:8080/images/margarita.jpg'),
-(1, 'Spaghetti Carbonara', 'Pasta with eggs, cheese, and pancetta', 'http://localhost:8080/images/spaghetti.jpg'),
-(2, 'Pierogi', 'Polish dumplings with various fillings','http://localhost:8080/images/pierogi.jpg'),
-(2, 'Bigos', 'Traditional Polish hunter’s stew','http://localhost:8080/images/bigos.jpg'),
-(1, 'Lasagna', 'Layers of pasta, cheese, and meat sauce','http://localhost:8080/images/lasagna.jpg');
+INSERT INTO meal (cuisine_id, name, description, image_url, source) VALUES
+(1, 'Margherita Pizza', 'Classic Italian pizza with tomato and cheese', 'http://localhost:8080/images/margarita.jpg','GLOBAL'),
+(1, 'Spaghetti Carbonara', 'Pasta with eggs, cheese, and pancetta', 'http://localhost:8080/images/spaghetti.jpg','GLOBAL'),
+(2, 'Pierogi', 'Polish dumplings with various fillings','http://localhost:8080/images/pierogi.jpg','GLOBAL'),
+(2, 'Bigos', 'Traditional Polish hunter’s stew','http://localhost:8080/images/bigos.jpg','GLOBAL'),
+(1, 'Lasagna', 'Layers of pasta, cheese, and meat sauce','http://localhost:8080/images/lasagna.jpg','GLOBAL');
 
 INSERT INTO ingredient (name, ingredient_category) VALUES
 ('Tomato', 'VEGETARIAN'),
@@ -133,10 +133,10 @@ INSERT INTO family_ingredient (family_id, name, ingredient_category) VALUES
 (2, 'Tofu', 'VEGAN'),
 (2, 'Chili Pepper', 'VEGAN');
 
-INSERT INTO family_meal (family_id, cuisine_id, name, description, image_url) VALUES
-(2, 1, 'Tofu Stir-Fry', 'Stir-fried tofu with vegetables and soy sauce','http://localhost:8080/images/default.jpg'),
-(2, 1, 'Spicy Veggie Wrap', 'A wrap with vegetables and spicy tofu','http://localhost:8080/images/default.jpg'),
-(2, 1, 'Chili Tofu Salad', 'Fresh salad with chili tofu and greens','http://localhost:8080/images/default.jpg');
+INSERT INTO family_meal (family_id, cuisine_id, name, description, image_url, source) VALUES
+(2, 1, 'Tofu Stir-Fry', 'Stir-fried tofu with vegetables and soy sauce','http://localhost:8080/images/default.jpg','CUSTOM'),
+(2, 1, 'Spicy Veggie Wrap', 'A wrap with vegetables and spicy tofu','http://localhost:8080/images/default.jpg','CUSTOM'),
+(2, 1, 'Chili Tofu Salad', 'Fresh salad with chili tofu and greens','http://localhost:8080/images/default.jpg','CUSTOM');
 
 INSERT INTO family_meal_composition (family_meal_id, ingredient_id, family_ingredient_id, `count`, unit) VALUES
 (1, NULL,   1,      200.0,  'GRAM'), -- Tofu (user ingredient)
@@ -161,4 +161,10 @@ INSERT INTO family_preference_cuisine (family_preference_id, cuisine_id) VALUES
 INSERT INTO family_preference_without_ingredient (family_preference_id, ingredient_id) VALUES
 (2,5);
 
-
+INSERT INTO meal_frequency(family_id, meal_id, source, frequency) VALUES
+(2,1,'CUSTOM','ONCE_WEEK'),
+(2,2,'CUSTOM','TWICE_WEEK'),
+(2,1,'GLOBAL','ONCE_WEEK'),
+(2,2,'GLOBAL','TWICE_MONTH'),
+(1,1,'GLOBAL','TWICE_MONTH'),
+(1,2,'GLOBAL','ONCE_WEEK');

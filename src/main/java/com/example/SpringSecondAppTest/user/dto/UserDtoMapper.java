@@ -10,18 +10,11 @@ public class UserDtoMapper {
     private UserDtoMapper() {
     }
 
-    public static List<UserDto> mapToUserDtos(Set<User> users) {
-        return users.stream()
-                .map(UserDtoMapper::mapToUserDto)
-                .toList();
-    }
-
-
     public static UserDto mapToUserDto(User user) {
         return new UserDto(
                 user.getId(),
                 user.getName(),
                 user.getRole(),
-                FamilyMapper.mapToFamilyDto(user.getCurrentFamily()));
+                FamilyMapper.mapToFamilyBasicDto(user.getCurrentFamily()));
     }
 }

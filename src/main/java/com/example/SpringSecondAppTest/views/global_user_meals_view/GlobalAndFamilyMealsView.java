@@ -1,20 +1,21 @@
 package com.example.SpringSecondAppTest.views.global_user_meals_view;
 
 
-import com.example.SpringSecondAppTest.views.Source;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.EmbeddedId;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 import lombok.Data;
+import org.springframework.data.annotation.Immutable;
 
 @Data
 @Entity
+@Immutable
 @Table(name = "global_family_meals_view")
 public class GlobalAndFamilyMealsView {
-    @Id
-    @Column(name = "row_id")
-    private Long id;
 
-    @Column(name = "meal_id")
-    private Long mealId;
+    @EmbeddedId
+    private GlobalAndFamilyMealsViewId id;
 
     private String name;
     private String description;
@@ -24,7 +25,4 @@ public class GlobalAndFamilyMealsView {
 
     @Column(name = "family_id")
     private Long familyId;
-
-    @Enumerated(EnumType.STRING)
-    private Source source;
 }

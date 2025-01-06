@@ -3,6 +3,7 @@ package com.example.SpringSecondAppTest.family_ingredient;
 import com.example.SpringSecondAppTest.family.Family;
 import com.example.SpringSecondAppTest.family_composition.FamilyMealComposition;
 import com.example.SpringSecondAppTest.ingerdient.IngredientCategory;
+import com.example.SpringSecondAppTest.views.Source;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,6 +24,9 @@ public class FamilyIngredient {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+
+    @Enumerated(EnumType.STRING)
+    private final Source source = Source.CUSTOM;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "ingredient_category")

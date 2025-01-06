@@ -35,17 +35,17 @@ public class MealController {
         return mealService.createMeal(meal);
     }
 
-    @PutMapping("/{meal_id}")
+    @PutMapping("/{mealId}")
     @PreAuthorize("hasRole('ADMIN')")
     public DetailedMealDto updateMealForAdmin(
-            @PathVariable("meal_id") Long mealId,
+            @PathVariable("mealId") Long mealId,
             @RequestBody DetailedMealWithoutIdDto meal){
         return mealService.updateMeal(mealId, meal);
     }
 
-    @DeleteMapping("/{meal_id}")
+    @DeleteMapping("/{mealId}")
     @PreAuthorize("hasRole('ADMIN')")
-    public void deleteIngredient(@PathVariable("meal_id") Long mealId){
+    public void deleteIngredient(@PathVariable("mealId") Long mealId){
         mealService.deleteMeal(mealId);
     }
 }

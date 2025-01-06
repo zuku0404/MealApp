@@ -16,7 +16,8 @@ public class GlobalAndFamilyMealsViewMapper {
 
     public static BasicMealDto mapToBasicMealDto(GlobalAndFamilyMealsView globalAndFamilyMeal){
         return new BasicMealDto(
-                globalAndFamilyMeal.getId(),
+                globalAndFamilyMeal.getId().getMealId(),
+                globalAndFamilyMeal.getId().getSource(),
                 globalAndFamilyMeal.getName(),
                 globalAndFamilyMeal.getImageUrl()
         );

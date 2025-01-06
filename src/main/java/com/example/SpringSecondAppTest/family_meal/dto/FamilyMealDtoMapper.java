@@ -22,6 +22,7 @@ public class FamilyMealDtoMapper {
                 meal.getName(),
                 meal.getDescription(),
                 meal.getImageUrl(),
+                meal.getSource(),
                 meal.getCuisine().getCuisineType(),
                 FamilyIngredientMealDtoMapper.mapToFamilyIngredientMealDtos(meal.getFamilyMealCompositions()));
     }
@@ -35,6 +36,7 @@ public class FamilyMealDtoMapper {
     public static BasicMealDto mapToBasicMealDto(FamilyMeal meal) {
         return new BasicMealDto(
                 meal.getId(),
+                meal.getSource(),
                 meal.getName(),
                 meal.getImageUrl());
     }

@@ -21,6 +21,7 @@ public class FamilyIngredientDtoMapper {
         return new IngredientDto(
                 ingredient.getId(),
                 ingredient.getName(),
+                ingredient.getSource(),
                 ingredient.getIngredientCategory());
     }
 
@@ -45,6 +46,7 @@ public class FamilyIngredientDtoMapper {
         return new IngredientDto(
                 familyIngredient.getId(),
                 familyIngredient.getName(),
+                familyIngredient.getSource(),
                 familyIngredient.getIngredientCategory());
     }
 }

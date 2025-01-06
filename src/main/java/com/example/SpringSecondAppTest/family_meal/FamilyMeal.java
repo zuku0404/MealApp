@@ -3,6 +3,7 @@ package com.example.SpringSecondAppTest.family_meal;//package com.zachaczuk.food
 import com.example.SpringSecondAppTest.cuisine.Cuisine;
 import com.example.SpringSecondAppTest.family.Family;
 import com.example.SpringSecondAppTest.family_composition.FamilyMealComposition;
+import com.example.SpringSecondAppTest.views.Source;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -23,6 +24,9 @@ public class FamilyMeal {
     private String description;
     @Column(name = "image_url")
     private String imageUrl;
+
+    @Enumerated(EnumType.STRING)
+    private final Source source = Source.CUSTOM;
 
     @OneToMany(mappedBy = "familyMeal", fetch = FetchType.LAZY)
     private Set<FamilyMealComposition> familyMealCompositions = new HashSet<>();

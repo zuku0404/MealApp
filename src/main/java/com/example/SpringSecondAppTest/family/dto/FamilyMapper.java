@@ -25,4 +25,10 @@ public class FamilyMapper {
                 FamilyMealDtoMapper.mapToBasicMealDtos(family.getMeals().stream().toList()),
                 UserFamilyDtoMapper.mapToUserFamilyWithoutFamilyDtos(family.getFamilies()));
     }
+
+    public static FamilyBasicDto mapToFamilyBasicDto (Family family) {
+        return new FamilyBasicDto(
+                family.getId(),
+                family.getName());
+    }
 }

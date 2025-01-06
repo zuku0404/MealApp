@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface GlobalAndFamilyMealsViewRepository extends JpaRepository<GlobalAndFamilyMealsView, Long> {
+public interface GlobalAndFamilyMealsViewRepository extends JpaRepository<GlobalAndFamilyMealsView, GlobalAndFamilyMealsViewId> {
     @Query("SELECT gafmv FROM GlobalAndFamilyMealsView gafmv " +
             "WHERE gafmv.familyId is NULL OR gafmv.familyId = :familyId")
     List<GlobalAndFamilyMealsView> findAllForFamily(@Param("familyId") Long familyId);
@@ -24,3 +24,4 @@ public interface GlobalAndFamilyMealsViewRepository extends JpaRepository<Global
 
     List<GlobalAndFamilyMealsView> findByName(@Param("name") String name);
 }
+

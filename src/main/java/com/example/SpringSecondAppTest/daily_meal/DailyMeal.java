@@ -30,6 +30,6 @@
 //    private Set<Family> families = new HashSet<>();
 //
 //    @ManyToOne
-//    @JoinColumn(name = "meal_id")
+//    @JoinColumn(name = "mealId")
 //    private Set<GlobalAndFamilyMealsView> meals = new HashSet<>();
 //}

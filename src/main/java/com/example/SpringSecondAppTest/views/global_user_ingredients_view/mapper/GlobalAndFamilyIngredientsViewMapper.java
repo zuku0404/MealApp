@@ -18,6 +18,7 @@ public class GlobalAndFamilyIngredientsViewMapper {
         return new IngredientDto(
                 globalAndFamilyIngredient.getRowId(),
                 globalAndFamilyIngredient.getName(),
+                globalAndFamilyIngredient.getSource(),
                 globalAndFamilyIngredient.getIngredientCategory()
         );
     }

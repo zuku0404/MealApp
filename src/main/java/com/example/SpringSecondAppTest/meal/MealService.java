@@ -141,7 +141,7 @@ public class MealService {
     private void ensureUniqueUserMealName(String mealName) {
         List<GlobalAndFamilyMealsView> globalAndFamilyMealsViews = globalAndFamilyMealsViewRepository.findByName(mealName);
         globalAndFamilyMealsViews.forEach(
-                view -> familyMealRepository.findById(view.getMealId()).ifPresent(
+                view -> familyMealRepository.findById(view.getId().getMealId()).ifPresent(
                         userMeal -> {
                             String postfix = "_" + userMeal.getFamily().getName();
                             String changedUserMealName = mealName + postfix;

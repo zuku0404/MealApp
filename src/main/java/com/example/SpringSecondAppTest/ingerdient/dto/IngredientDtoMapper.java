@@ -19,6 +19,7 @@ public class IngredientDtoMapper {
         return new IngredientDto(
                 ingredient.getId(),
                 ingredient.getName(),
+                ingredient.getSource(),
                 ingredient.getIngredientCategory());
     }
 

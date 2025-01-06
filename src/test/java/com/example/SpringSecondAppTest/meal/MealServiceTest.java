@@ -5,8 +5,12 @@ import com.example.SpringSecondAppTest.cuisine.CuisineType;
 import com.example.SpringSecondAppTest.family_meal.FamilyMealRepository;
 import com.example.SpringSecondAppTest.ingerdient.IngredientRepository;
 import com.example.SpringSecondAppTest.meal.dto.BasicMealDto;
+import com.example.SpringSecondAppTest.meal.dto.DetailedMealWithoutIdDto;
 import com.example.SpringSecondAppTest.meal.dto.MealDtoMapper;
+import com.example.SpringSecondAppTest.meal_composition.MealComposition;
 import com.example.SpringSecondAppTest.meal_composition.MealCompositionRepository;
+import com.example.SpringSecondAppTest.meal_composition.Unit;
+import com.example.SpringSecondAppTest.meal_composition.dto.MealCompositionWithoutIdDto;
 import com.example.SpringSecondAppTest.sample.meal.MealSample;
 import com.example.SpringSecondAppTest.views.global_user_meals_view.GlobalAndFamilyMealsViewRepository;
 import liquibase.exception.DatabaseException;
@@ -137,9 +141,43 @@ public class MealServiceTest {
             return MealDtoMapper.mapToBasicMealDtos(expectedMeals);
         }
     }
-//    @Nested
-//    @DisplayName("Tests for findMealById method")
-//    class FindMealById {
-//        @Test
-//    }
+    @Nested
+    @DisplayName("Tests for createMeal method")
+    class CreateMeal {
+        @Test
+        void shouldCreateMealWhenAllValidInputsAreProvided() {
+//            new MealCompositionWithoutIdDto(1.0, Unit.TEASPOON,"Water"),
+//            new MealCompositionWithoutIdDto(100.0, Unit.GRAM,"Water"),
+//            new MealCompositionWithoutIdDto(1.5, Unit.CUP,"Water"),
+//            new MealCompositionWithoutIdDto(1.0, Unit.CLOVE,"Water"),
+//
+//            new DetailedMealWithoutIdDto(
+//                    "myNewMeal",
+//                    "description",
+//                    "xxxxx",
+//                    CuisineType.POLISH,
+//                    MealCompositionWithoutIdDto
+//
+//                    )
+//
+//
+//            mealService.createMeal()
+        }
+    }
 }
+
+//shouldCreateMealWhenAllValidInputsAreProvided
+//        shouldThrowExceptionWhenMealNameAlreadyExists
+//shouldThrowExceptionWhenMealNameIsInvalid
+//        shouldThrowExceptionWhenCuisineTypeIsNotFound
+//shouldThrowExceptionWhenMealHasNoIngredients
+//        shouldMapMealToDetailedMealDtoAfterSaving
+//shouldValidateMealNameSuccessfully
+//        shouldEnsureUniqueUserMealNameSuccessfully
+//shouldCreateMealCompositionsWhenIngredientsAreProvided
+//        shouldThrowExceptionWhenMealCompositionsAreNull
+//shouldThrowExceptionWhenMealCompositionsAreEmpty
+//        shouldHandleDataIntegrityViolationGracefully
+//shouldAssociateIngredientsWithMealSuccessfully
+//        shouldPersistMealSuccessfullyToRepository
+//shouldNotCreateMealWhenAnExceptionOccurs

@@ -18,6 +18,7 @@ create table meal (
     name varchar(255) unique,
     description varchar(255),
     image_url varchar(250),
+    source varchar(250),
     constraint meal_cuisine_fk foreign key (cuisine_id) references cuisine(id)
 );
 
@@ -59,6 +60,7 @@ create table user (
 );
 
 create table user_family (
+    id bigint primary key auto_increment,
     family_id bigint not null,
     user_id bigint not null,
     constraint user_family_family_fk foreign key (family_id) references family(id),
@@ -80,6 +82,7 @@ create table family_meal (
     name varchar(255),
     description varchar(255),
     image_url varchar(250),
+    source varchar(250),
     constraint family_meal_cuisine_fk foreign key (cuisine_id) references cuisine(id),
     constraint family_meal_family_fk foreign key (family_id) references family(id)
 );
@@ -122,13 +125,24 @@ create view global_family_ingredients_view as
     from (
     select id, name, 'GLOBAL' as source, null as family_id, ingredient_category from ingredient
     union all
-    select id, name, 'FAMILY' as source, family_id, ingredient_category from family_ingredient) AS combined;
+    select id, name, 'CUSTOM' as source, family_id, ingredient_category from family_ingredient) AS combined;
 
 create view global_family_meals_view as
-    select ROW_NUMBER() OVER (ORDER BY source, id) AS row_id, id as meal_id, family_id, name, image_url, description, source
-    from (
-    select id, name, null as family_id, image_url, 'GLOBAL' as source, description from meal
+    select id as meal_id, name, description , null as family_id, image_url, source
+    from meal
     union all
-    select id, name, family_id, image_url, 'FAMILY' as source, description from family_meal) AS combined;
+    select id as meal_id, name, description, family_id, image_url, source
+    from family_meal
+    order by source, meal_id;
+
+create table meal_frequency (
+    id bigint not null primary key auto_increment,
+    family_id bigint not null,
+    meal_id bigint not null,
+    source varchar (20) not null,
+    frequency varchar(20) not null,
+    constraint meal_frequency_family_fk foreign key (family_id) references family(id),
+    unique(family_id,meal_id,source)
+);
 
 

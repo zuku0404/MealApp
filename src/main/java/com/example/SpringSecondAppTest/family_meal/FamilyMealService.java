@@ -59,12 +59,12 @@ public class FamilyMealService {
     public DetailedMealDto getMeal(User user, Long id) {
         List<GlobalAndFamilyMealsView> globalAndFamilyMealsViews = globalAndFamilyMealsViewRepository.findAllForFamily(user.getCurrentFamily().getId());
         GlobalAndFamilyMealsView globalAndFamilyMealsView = globalAndFamilyMealsViews.get(Math.toIntExact(id) - 1);
-        if (globalAndFamilyMealsView.getSource() == Source.GLOBAL) {
-            Meal meal = mealRepository.findById(globalAndFamilyMealsView.getMealId())
+        if (globalAndFamilyMealsView.getId().getSource() == Source.GLOBAL) {
+            Meal meal = mealRepository.findById(globalAndFamilyMealsView.getId().getMealId())
                     .orElseThrow(() -> new MealNotFoundException(String.format(ErrorMessage.MEAL_NOT_FOUND, id)));
             return MealDtoMapper.mapToDetailedMealDto(meal);
         } else {
-            FamilyMeal familyMeal = familyMealRepository.findByIdAndFamilyId(globalAndFamilyMealsView.getMealId(), globalAndFamilyMealsView.getFamilyId())
+            FamilyMeal familyMeal = familyMealRepository.findByIdAndFamilyId(globalAndFamilyMealsView.getId().getMealId(), globalAndFamilyMealsView.getFamilyId())
                     .orElseThrow(() -> new MealNotFoundException(String.format(ErrorMessage.MEAL_NOT_FOUND, id)));
             return FamilyMealDtoMapper.mapToDetailedMealDto(familyMeal);
         }
@@ -198,7 +198,7 @@ public class FamilyMealService {
     }
 
     public List<FamilyIngredient> getUserIngredientsFromRepo(Map<Source, List<Long>> ingredientIdsForDifferentSources) {
-        List<Long> ingredientIds = ingredientIdsForDifferentSources.get(Source.FAMILY);
+        List<Long> ingredientIds = ingredientIdsForDifferentSources.get(Source.CUSTOM);
         return ingredientIds != null ? familyIngredientRepository.findAllById(ingredientIds) : new ArrayList<>();
     }
 

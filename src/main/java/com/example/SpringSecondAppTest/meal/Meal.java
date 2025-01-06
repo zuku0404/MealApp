@@ -2,6 +2,7 @@ package com.example.SpringSecondAppTest.meal;
 
 import com.example.SpringSecondAppTest.cuisine.Cuisine;
 import com.example.SpringSecondAppTest.meal_composition.MealComposition;
+import com.example.SpringSecondAppTest.views.Source;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,6 +25,9 @@ public class Meal {
     private String description;
     @Column(name = "image_url")
     private String imageUrl;
+
+    @Enumerated(EnumType.STRING)
+    private final Source source = Source.GLOBAL;
 
     @OneToMany(mappedBy = "meal", cascade = CascadeType.ALL)
     private Set<MealComposition> mealCompositions = new HashSet<>();
